@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ChatGPT Request</title>
+</head>
+<body>
+  <input type="text">
+  <button onclick="processChatGPTRequest()">Submit Request</button>
+  <div id="response"></div>
+
+  <script>
+    function processChatGPTRequest() {
+      // Set your OpenAI API key
+      const apiKey = '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';
+
+      // Set the prompt
+      const prompt = 'What is the meaning of life?';
+
+      // Set the API endpoint
+      const endpoint = 'https://api.openai.com/v1/engines/davinci-codex/completions';
+
+      // Set the request data
+      const requestData = {
+        prompt: prompt,
+        max_tokens: 50
+      };
+
+      // Send the request
+      fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`
+        },
+        body: JSON.stringify(requestData)
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Process the response
+        const responseText = data.choices[0].text;
+        document.getElementById('response').textContent = responseText;
+      })
+      .catch(error => {
+        console.log('Error:', error);
+        document.getElementById('response').textContent = 'Error occurred while processing the request.';
+      });
+    }
+  </script>
+</body>
+</html>
